@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Business {
+  id             String        @id @default(cuid())
+  name           String
+  entityType     String
+  federalTaxRate Float
+  stateTaxRate   Float
+  foundedAt      DateTime
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  bankAccounts   BankAccount[]
+  clients        Client[]
+  employees      Employee[]
+  transactions   Transaction[]
+  invoices       Invoice[]     @relation("BusinessInvoices")
+}
+
+model BankAccount {
+  id           String        @id @default(cuid())
+  businessId   String
+  name         String
+  type         String
+  institution  String
+  balance      Float         @default(0)
+  createdAt    DateTime      @default(now())
+  business     Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@index([businessId])
+}
+
+model Client {
+  id               String    @id @default(cuid())
+  businessId       String
+  name             String
+  contactEmail     String
+  healthScore      Int
+  monthlyRetainer  Float?
+  engagementType   String
+  startedAt        DateTime
+  status           String
+  business         Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  invoices         Invoice[]
+
+  @@index([businessId])
+}
+
+model Invoice {
+  id            String    @id @default(cuid())
+  clientId      String
+  businessId    String
+  invoiceNumber String
+  amount        Float
+  issuedAt      DateTime
+  dueAt         DateTime
+  paidAt        DateTime?
+  status        String
+  description   String
+  client        Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  business      Business  @relation("BusinessInvoices", fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+  @@index([businessId])
+}
+
+model Employee {
+  id            String   @id @default(cuid())
+  businessId    String
+  name          String
+  role          String
+  monthlySalary Float
+  startedAt     DateTime
+  isFounder     Boolean  @default(false)
+  status        String
+  business      Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId])
+}
+
+model Transaction {
+  id            String      @id @default(cuid())
+  businessId    String
+  bankAccountId String
+  amount        Float
+  type          String
+  category      String
+  description   String
+  occurredAt    DateTime
+  createdAt     DateTime    @default(now())
+  business      Business    @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  bankAccount   BankAccount @relation(fields: [bankAccountId], references: [id], onDelete: Cascade)
+
+  @@index([businessId])
+  @@index([bankAccountId])
+  @@index([occurredAt])
+}
