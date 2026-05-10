@@ -8,7 +8,7 @@ interface MoneyProps {
 
 export function Money({ amount, currency = "USD", className }: MoneyProps) {
   return (
-    <span className={`tabular${className ? ` ${className}` : ""}`}>
+    <span className={`tabular font-mono${className ? ` ${className}` : ""}`}>
       {formatCurrency(amount, currency)}
     </span>
   );

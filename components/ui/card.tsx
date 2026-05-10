@@ -8,7 +8,7 @@ export function Card({
   className?: string;
 }) {
   return (
-    <div className={clsx("rounded-lg border border-zinc-200 bg-white shadow-sm", className)}>
+    <div className={clsx("rounded border border-outline-variant bg-surface-container-lowest", className)}>
       {children}
     </div>
   );
@@ -22,7 +22,7 @@ export function CardHeader({
   className?: string;
 }) {
   return (
-    <div className={clsx("border-b border-zinc-200 px-6 py-4", className)}>
+    <div className={clsx("border-b border-outline-variant px-6 py-4", className)}>
       {children}
     </div>
   );
@@ -36,7 +36,7 @@ export function CardTitle({
   className?: string;
 }) {
   return (
-    <h3 className={clsx("text-sm font-medium text-zinc-900", className)}>
+    <h3 className={clsx("text-label-xs uppercase tracking-tight text-on-surface-variant", className)}>
       {children}
     </h3>
   );

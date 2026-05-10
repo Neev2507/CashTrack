@@ -48,9 +48,9 @@ export default async function CashCommandPage() {
   const recent = getRecentTransactions(transactions, 10);
 
   const runwayColor =
-    runway < 3 ? "text-red-600" : runway < 6 ? "text-amber-600" : "text-zinc-900";
+    runway < 3 ? "text-error" : runway < 6 ? "text-amber-600" : "text-on-surface";
   const runwayBarColor =
-    runway < 3 ? "bg-red-600" : runway < 6 ? "bg-amber-500" : "bg-zinc-900";
+    runway < 3 ? "bg-error" : runway < 6 ? "bg-secondary-container" : "bg-primary";
   const runwayPct = Math.min(runway / 12, 1) * 100;
 
   const todayStr = format(today, "yyyy-MM-dd");
@@ -60,10 +60,10 @@ export default async function CashCommandPage() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900">Cash Command</h1>
-          <p className="mt-0.5 text-sm text-zinc-500">Real-time runway and burn analysis</p>
+          <h1 className="text-display text-on-surface">Cash Command</h1>
+          <p className="mt-0.5 text-body-sm text-on-surface-variant">Real-time runway and burn analysis</p>
         </div>
-        <p className="mt-1 text-xs text-zinc-400">
+        <p className="mt-1 text-label-xs text-on-surface-variant">
           Updated {format(today, "MMM d, yyyy")}, from Chase Operating + Mercury Tax Reserve
         </p>
       </div>
@@ -73,14 +73,14 @@ export default async function CashCommandPage() {
 
         {/* Runway */}
         <Card className="p-6">
-          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">Runway</p>
-          <p className={clsx("tabular mt-1 text-3xl font-semibold tracking-tight", runwayColor)}>
+          <p className="text-label-xs uppercase tracking-wide text-on-surface-variant">Runway</p>
+          <p className={clsx("text-data-lg mt-1", runwayColor)}>
             {runway >= 99 ? "99+" : runway.toFixed(1)} months
           </p>
-          <p className="mt-1 text-xs text-zinc-500">
-            at current burn of <Money amount={monthlyBurn} className="text-zinc-500" />/mo
+          <p className="mt-1 text-label-xs text-on-surface-variant">
+            at current burn of <Money amount={monthlyBurn} className="text-on-surface-variant" />/mo
           </p>
-          <div className="mt-3 h-1.5 w-full rounded-full bg-zinc-100">
+          <div className="mt-3 h-1.5 w-full rounded-full bg-surface-container-high">
             <div
               className={clsx("h-1.5 rounded-full transition-all", runwayBarColor)}
               style={{ width: `${runwayPct}%` }}
@@ -90,15 +90,15 @@ export default async function CashCommandPage() {
 
         {/* Monthly burn */}
         <Card className="p-6">
-          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">Monthly Burn</p>
-          <p className="tabular mt-1 text-3xl font-semibold tracking-tight text-zinc-900">
+          <p className="text-label-xs uppercase tracking-wide text-on-surface-variant">Monthly Burn</p>
+          <p className="text-data-lg mt-1 text-on-surface">
             <Money amount={monthlyBurn} />
           </p>
           <div className="mt-1 flex items-center gap-1.5">
             <span
               className={clsx(
-                "flex items-center gap-0.5 text-xs font-medium",
-                burnDelta > 0 ? "text-red-600" : "text-emerald-600",
+                "flex items-center gap-0.5 text-label-xs",
+                burnDelta > 0 ? "text-error" : "text-secondary",
               )}
             >
               {burnDelta > 0
@@ -106,22 +106,22 @@ export default async function CashCommandPage() {
                 : <ArrowDown size={10} strokeWidth={2} />}
               {burnDelta > 0 ? "+" : ""}{burnDelta}%
             </span>
-            <span className="text-xs text-zinc-500">vs prior 3 months</span>
+            <span className="text-label-xs text-on-surface-variant">vs prior 3 months</span>
           </div>
-          <p className="mt-0.5 text-xs text-zinc-500">Avg trailing 3 months</p>
+          <p className="mt-0.5 text-label-xs text-on-surface-variant">Avg trailing 3 months</p>
         </Card>
 
         {/* Cash position */}
         <Card className="p-6">
-          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">Cash Position</p>
-          <p className="tabular mt-1 text-3xl font-semibold tracking-tight text-zinc-900">
+          <p className="text-label-xs uppercase tracking-wide text-on-surface-variant">Cash Position</p>
+          <p className="text-data-lg mt-1 text-on-surface">
             <Money amount={totalCash} />
           </p>
-          <p className="mt-1 text-xs text-zinc-500">
-            <Money amount={opBalance} className="text-zinc-500" />
+          <p className="mt-1 text-label-xs text-on-surface-variant">
+            <Money amount={opBalance} className="text-on-surface-variant" />
             {" operating"}
-            <span className="mx-1.5 text-zinc-300">·</span>
-            <Money amount={taxBalance} className="text-zinc-500" />
+            <span className="mx-1.5 text-outline-variant">·</span>
+            <Money amount={taxBalance} className="text-on-surface-variant" />
             {" reserve"}
           </p>
         </Card>
@@ -131,7 +131,7 @@ export default async function CashCommandPage() {
       <Card>
         <CardHeader>
           <CardTitle>90-Day Projection</CardTitle>
-          <p className="mt-0.5 text-xs text-zinc-500">
+          <p className="mt-0.5 text-label-xs text-on-surface-variant">
             Based on trailing 90-day income and expense pace
           </p>
         </CardHeader>
@@ -147,29 +147,29 @@ export default async function CashCommandPage() {
         <Card>
           <CardHeader>
             <CardTitle>Recent Activity</CardTitle>
-            <p className="mt-0.5 text-xs text-zinc-500">Last 10 transactions</p>
+            <p className="mt-0.5 text-label-xs text-on-surface-variant">Last 10 transactions</p>
           </CardHeader>
           <div className="px-6">
             {recent.map((tx, i) => {
               const isTransfer = tx.category === "tax_reserve_transfer";
               const amtColor = isTransfer
-                ? "text-zinc-400"
+                ? "text-on-surface-variant"
                 : tx.amount > 0
-                ? "text-emerald-600"
-                : "text-red-600";
+                ? "text-secondary"
+                : "text-error";
               return (
                 <div
                   key={`${tx.occurredAt.toISOString()}-${i}`}
                   className={clsx(
                     "flex items-center justify-between py-3",
-                    i < recent.length - 1 && "border-b border-zinc-100",
+                    i < recent.length - 1 && "border-b border-outline-variant",
                   )}
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs text-zinc-500">{format(tx.occurredAt, "MMM d, yyyy")}</p>
-                    <p className="mt-0.5 truncate text-sm text-zinc-900">{tx.description}</p>
+                    <p className="text-label-xs text-on-surface-variant">{format(tx.occurredAt, "MMM d, yyyy")}</p>
+                    <p className="mt-0.5 truncate text-body-sm text-on-surface">{tx.description}</p>
                   </div>
-                  <span className={clsx("tabular ml-4 shrink-0 text-sm font-medium", amtColor)}>
+                  <span className={clsx("tabular font-mono ml-4 shrink-0 text-body-sm font-medium", amtColor)}>
                     {tx.amount > 0 ? "+" : ""}
                     <Money amount={tx.amount} className={amtColor} />
                   </span>
@@ -183,23 +183,23 @@ export default async function CashCommandPage() {
         <Card>
           <CardHeader>
             <CardTitle>Burn Breakdown</CardTitle>
-            <p className="mt-0.5 text-xs text-zinc-500">Where the money goes, last 30 days</p>
+            <p className="mt-0.5 text-label-xs text-on-surface-variant">Where the money goes, last 30 days</p>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col gap-4">
               {breakdown.map((item) => (
                 <div key={item.category}>
                   <div className="mb-1.5 flex items-center justify-between">
-                    <span className="text-sm text-zinc-700">{categoryLabel(item.category)}</span>
+                    <span className="text-body-sm text-on-surface">{categoryLabel(item.category)}</span>
                     <div className="flex items-center gap-3">
-                      <span className="text-xs text-zinc-500">{item.pct}%</span>
-                      <span className="tabular text-sm font-medium text-zinc-900">
+                      <span className="text-label-xs text-on-surface-variant">{item.pct}%</span>
+                      <span className="text-data-md text-on-surface">
                         <Money amount={item.amount} />
                       </span>
                     </div>
                   </div>
-                  <div className="h-1.5 w-full rounded-full bg-zinc-100">
-                    <div className="h-1.5 rounded-full bg-zinc-900" style={{ width: `${item.pct}%` }} />
+                  <div className="h-1.5 w-full rounded-full bg-surface-container-high">
+                    <div className="h-1.5 rounded-full bg-primary" style={{ width: `${item.pct}%` }} />
                   </div>
                 </div>
               ))}

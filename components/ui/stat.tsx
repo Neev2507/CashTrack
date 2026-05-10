@@ -15,15 +15,15 @@ export function Stat({ label, value, sublabel, delta, deltaLabel }: StatProps) {
 
   return (
     <div className="flex flex-col gap-1">
-      <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">{label}</p>
-      <p className="tabular text-3xl font-semibold tracking-tight text-zinc-900">{value}</p>
+      <p className="text-label-xs uppercase tracking-tight text-on-surface-variant">{label}</p>
+      <p className="text-data-lg text-on-surface">{value}</p>
       {(hasDelta || sublabel) && (
         <div className="flex items-center gap-1.5">
           {hasDelta && (
             <span
               className={clsx(
-                "flex items-center gap-0.5 text-xs font-medium",
-                positive ? "text-emerald-600" : "text-red-600"
+                "flex items-center gap-0.5 text-label-xs",
+                positive ? "text-secondary" : "text-error"
               )}
             >
               {positive ? (
@@ -36,10 +36,10 @@ export function Stat({ label, value, sublabel, delta, deltaLabel }: StatProps) {
             </span>
           )}
           {deltaLabel && (
-            <span className="text-xs text-zinc-500">{deltaLabel}</span>
+            <span className="text-label-xs text-on-surface-variant">{deltaLabel}</span>
           )}
           {sublabel && !deltaLabel && (
-            <span className="text-xs text-zinc-500">{sublabel}</span>
+            <span className="text-label-xs text-on-surface-variant">{sublabel}</span>
           )}
         </div>
       )}

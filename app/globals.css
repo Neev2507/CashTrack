@@ -1,14 +1,98 @@
 @import "tailwindcss";
 
-@theme inline {
+@theme {
+  --color-surface: #fcf8f8;
+  --color-surface-dim: #dcd9d9;
+  --color-surface-bright: #fcf8f8;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container: #f1eded;
+  --color-surface-container-high: #ebe7e7;
+  --color-surface-container-highest: #e5e2e1;
+  --color-on-surface: #1c1b1c;
+  --color-on-surface-variant: #44474a;
+  --color-inverse-surface: #313030;
+  --color-inverse-on-surface: #f3f0f0;
+  --color-outline: #75777b;
+  --color-outline-variant: #c5c6ca;
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #191c1f;
+  --color-on-primary-container: #828488;
+  --color-secondary: #795902;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fdd275;
+  --color-on-secondary-container: #775800;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-background: #fcf8f8;
+  --color-on-background: #1c1b1c;
   --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --radius-sm: 0.125rem;
+  --radius-DEFAULT: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
 }
 
 body {
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
 .tabular {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
+}
+
+.text-display {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.text-header-sm {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.text-body-md {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.text-body-sm {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.text-data-lg {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+.text-data-md {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+.text-label-xs {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
 }
